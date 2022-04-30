@@ -2,7 +2,8 @@
 .Rhistory
 .RData
 .Ruserdata
-.csv
-.gz
-.log
+*.csv
+*.gz
+*.log
+old/
 
