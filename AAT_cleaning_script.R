@@ -19,16 +19,16 @@ task_data <- df |>
                                      !is.na(`right image outcome`) ~ `right image outcome`)) |> 
   #selects only relevant variables
   select(c(ID, date, trial, 2, 4:6, 46,47)) |> 
-  #renames reaction time variable to be appropriate
+  #renames reaction time variable to be appropriate label
   rename(reaction_time = choose_trial_end.rt) |> 
   #lubridate to clean up date
   mutate(date = lubridate::ymd_hms(date))   %>% 
-  #identifies whether the task data is complete or not
+  #identifies whether the task data is complete or not, adds a column to identify completeness
   group_by(ID, date) %>% 
   mutate(n = max(trial)) %>% 
   mutate(complete = ifelse(n == 150, 1, 0)) %>% 
   select(!n) %>% 
-  ungroup()
+  ungroup()  
 
 #cleans up image names to take out file path
 task_data$image_outcome <- stringr::str_remove(task_data$image_outcome,'stimuli/')
