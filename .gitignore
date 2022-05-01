@@ -6,4 +6,4 @@
 *.gz
 *.log
 old/
-
+*.icloud

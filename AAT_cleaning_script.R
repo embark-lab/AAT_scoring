@@ -14,7 +14,11 @@ task_data <- df |>
                                      !is.na(`right image outcome`) ~ `right image outcome`)) |> 
   select(c(ID, date, trial, 2, 4:6, 46,47)) |> 
   rename(reaction_time = choose_trial_end.rt) |> 
-  mutate(date = lubridate::ymd_hms(date))
+  mutate(date = lubridate::ymd_hms(date)) 
+
+task_data$image_outcome <- stringr::str_remove(task_data$image_outcome,'stimuli/')
+task_data$image_outcome <- stringr::str_remove(task_data$image_outcome, '.jpg')
+
 
 
 return(task_data)
@@ -28,6 +32,10 @@ arousal_data <- df |>
   select(c(ID, trial, session, date, 51:58, 64)) |> 
   select (!c(session, valence_end_key.keys, arousal_end_key.keys, valence_end_key.rt, arousal_end_key.rt)) |> 
   mutate(date = lubridate::ymd_hms(date))
+
+arousal_data$ImageFile <- stringr::str_remove(arousal_data$ImageFile,'stimuli/')
+arousal_data$ImageFile <- stringr::str_remove(arousal_data$ImageFile, '.jpg')
+
 
 return(arousal_data)
 }
@@ -53,6 +61,6 @@ data <- clean_aat_task()
 aat_task_data <- data[[1]]
 aat_stimulus_data <- data[[2]]
 
-write.csv(aat_task_data, 'aat_cleaned.csv')
-write.csv(aat_stimulus_data, 'aat_cleaned_stimulus.csv')
+write.csv(aat_task_data, 'clean/aat_cleaned.csv')
+write.csv(aat_stimulus_data, 'clean/aat_cleaned_stimulus.csv')
 
