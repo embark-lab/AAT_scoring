@@ -1,4 +1,4 @@
-library(dplry)
+library(dplyr)
 
 clean_task_data <- function (df){ 
   
